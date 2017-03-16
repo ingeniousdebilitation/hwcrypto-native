@@ -55,20 +55,16 @@ std::vector<unsigned char> QtCertSelect::getCert(const std::vector<std::vector<u
 
 QtCertSelect::QtCertSelect(const QString &origin, CertificatePurpose type)
 {
-    QLabel *message = new QLabel(this);
-    QTreeWidget *table = new QTreeWidget(this);
-    QDialogButtonBox *buttons = new QDialogButtonBox(this);
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->addWidget(message);
-    layout->addWidget(table);
-    layout->addWidget(buttons);
-
     setWindowFlags(Qt::WindowStaysOnTopHint);
-    // remove minimize and maximize buttons
+    // remove minimize and fullscreen buttons (maximize disables sizegrip on osx)
     setWindowFlags((windowFlags()|Qt::CustomizeWindowHint) &
-                   ~(Qt::WindowMaximizeButtonHint|Qt::WindowMinimizeButtonHint|Qt::WindowCloseButtonHint));
+        ~(/*Qt::WindowMaximizeButtonHint|*/Qt::WindowFullscreenButtonHint|Qt::WindowMinimizeButtonHint|Qt::WindowCloseButtonHint));
     setWindowTitle(tr("Select certificate for %1 on %2").arg(type == Signing?tr("signing"):tr("authentication")).arg(origin));
-    message->setText(tr("Selected certificate will be forwarded to the remote website"));
+    setMinimumWidth(500);
+
+    QLabel *message = new QLabel(tr("Selected certificate will be forwarded to the remote website"), this);
+
+    QTreeWidget *table = new QTreeWidget(this);
     table->setColumnCount(3);
     table->setRootIsDecorated(false);
     table->setHeaderLabels({tr("Certificate"), tr("Type"), tr("Valid to")});
@@ -76,6 +72,7 @@ QtCertSelect::QtCertSelect(const QString &origin, CertificatePurpose type)
     table->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     table->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 
+    QDialogButtonBox *buttons = new QDialogButtonBox(this);
     QPushButton *ok = buttons->addButton(tr("Select"), QDialogButtonBox::AcceptRole);
     buttons->addButton(tr("Cancel"), QDialogButtonBox::RejectRole);
     connect(buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
@@ -84,8 +81,8 @@ QtCertSelect::QtCertSelect(const QString &origin, CertificatePurpose type)
         ok->setEnabled(true);
     });
 
-    show();
-    // Make sure window is in foreground and focus
-    raise();
-    activateWindow();
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->addWidget(message);
+    layout->addWidget(table);
+    layout->addWidget(buttons);
 }
