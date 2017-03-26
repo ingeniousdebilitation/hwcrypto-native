@@ -35,7 +35,7 @@ addons:
     project:
       name: hwcrypto/hwcrypto-native
     notification_email: hwcrypto@googlegroups.com
-    build_command_prepend: 
+    build_command_prepend: export PATH=/opt/qt56/bin:$PATH; sudo add-apt-repository ppa:beineri/opt-qt562-trusty -y; sudo apt-get update; sudo apt-get install -y qt56base qt56tools devscripts
     build_command: make
     branch_pattern: coverity_scan
 deploy:
