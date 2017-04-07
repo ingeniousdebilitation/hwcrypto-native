@@ -16,3 +16,5 @@
 moc_*.cpp
 moc_*.h
 qrc_*.cpp
+pkg/
+*.pkg.tar.xz

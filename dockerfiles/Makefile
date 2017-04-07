@@ -1,6 +1,6 @@
 #!/bin/bash
 VENDOR=martinpaljak
-DISTROS = debian-testing fedora-25 ubuntu-16.04 ubuntu-16.10 ubuntu-17.04
+DISTROS = debian-testing fedora-25 archlinux ubuntu-16.04 ubuntu-16.10 ubuntu-17.04
 
 prepare:
 	for f in $(DISTROS); do \

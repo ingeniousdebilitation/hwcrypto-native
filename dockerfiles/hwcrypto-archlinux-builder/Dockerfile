@@ -4,4 +4,4 @@ VOLUME /artifacts
 RUN useradd -m -G wheel -s /bin/bash --home-dir /build build
 USER build
 WORKDIR /build
-CMD git clone https://aur.archlinux.org/hwcrypto-native-git.git && cd hwcrypto-native-* && makepkg --syncdeps --noconfirm && cp hwcrypto-native-git-*.pkg.tar.xz /artifacts
+CMD git clone https://github.com/hwcrypto/hwcrypto-native && cd hwcrypto-native && git checkout -qf ${TRAVIS_COMMIT:-master} && PKGDEST=/artifacts make
