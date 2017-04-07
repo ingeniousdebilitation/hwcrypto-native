@@ -18,8 +18,8 @@ pkgver() {
     if [ -n "$VERSION" ]; then
         echo $VERSION
     else
-        source VERSION.mk
-        echo $VERSION
+        cd ..
+        grep "VERSION=" VERSION.mk | tr "=" "\n" | tail -1
     fi
 }
 
