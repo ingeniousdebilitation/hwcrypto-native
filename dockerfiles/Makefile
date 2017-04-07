@@ -26,4 +26,4 @@ build:
 	done
 
 clean:
-	rm -f *.deb *.rpm
+	rm -f *.deb *.rpm *.pkg.tar.xz
